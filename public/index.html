@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container" id="products"></div>
+
+    <script>
+        fetch('/products')
+            .then(res => res.json())
+            .then(products => {
+                const container = document.getElementById('products');
+                products.forEach(product => {
+                    container.innerHTML += `
+                        <div class="product-card">
+                            <div class="product-card__image">
+                                <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="product-card__content">
+                                <h2 class="product-card__title">${product.name}</h2>
+                                <p class="product-card__description">${product.description}</p>
+                                <div class="product-card__footer">
+                                    <span class="product-card__price">${product.price.toLocaleString('ru-RU')} ₽</span>
+                                    <button class="product-card__btn">Купить</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+    </script>
+</body>
+
+</html>
